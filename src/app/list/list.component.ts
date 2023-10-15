@@ -2,7 +2,11 @@ import {
   Component,
   inject,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {
+  AsyncPipe,
+  NgFor,
+  NgIf,
+} from '@angular/common';
 import {
   FormBuilder,
   FormControl,
@@ -12,18 +16,30 @@ import {
 import {
   debounceTime,
   distinctUntilChanged,
+  Observable,
+  of,
 } from 'rxjs';
+import {
+  ob,
+  TZelda,
+} from './data';
 
 type TFormGroup = { search: FormControl<string> };
+
+type TListComponent = {
+  searchForm: FormGroup<TFormGroup>;
+  searchValue$: Observable<string>;
+  list$: Observable<TZelda[]>;
+}
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule],
+  imports: [ ReactiveFormsModule,NgIf, NgFor, AsyncPipe ],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss'],
 })
-export class ListComponent {
+export class ListComponent implements TListComponent {
   private _formBuilder: FormBuilder = inject(FormBuilder)
 
   searchForm: FormGroup<TFormGroup> = this._formBuilder.nonNullable.group({
@@ -34,5 +50,7 @@ export class ListComponent {
     debounceTime(200),
     distinctUntilChanged(),
   );
+
+  list$: Observable<TZelda[]> = of(ob)
 
 }
