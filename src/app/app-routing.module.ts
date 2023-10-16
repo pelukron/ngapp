@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ListComponent } from './list/list.component';
+import { ExampleObservablesComponent } from './example-observables/example-observables.component';
 
 const routes: Routes = [
   {
@@ -10,7 +10,7 @@ const routes: Routes = [
   },
   {
     path: 'list',
-    component: ListComponent
+    component: ExampleObservablesComponent
   }
 ];
 

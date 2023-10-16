@@ -33,13 +33,13 @@ type TListComponent = {
 }
 
 @Component({
-  selector: 'app-list',
+  selector: 'app-example-observables',
   standalone: true,
   imports: [ ReactiveFormsModule,NgIf, NgFor, AsyncPipe ],
-  templateUrl: './list.component.html',
-  styleUrls: ['./list.component.scss'],
+  templateUrl: './example-observables.component.html',
+  styleUrls: ['./example-observables.component.scss'],
 })
-export class ListComponent implements TListComponent {
+export class ExampleObservablesComponent implements TListComponent {
   private _formBuilder: FormBuilder = inject(FormBuilder)
 
   searchForm: FormGroup<TFormGroup> = this._formBuilder.nonNullable.group({
