@@ -19,23 +19,24 @@ import {
   Observable,
   of,
 } from 'rxjs';
+
+import { ListComponent } from '../list/list.component';
 import {
   ob,
   TZelda,
-} from './data';
+} from '../list/data';
 
 type TFormGroup = { search: FormControl<string> };
 
 type TListComponent = {
   searchForm: FormGroup<TFormGroup>;
   searchValue$: Observable<string>;
-  list$: Observable<TZelda[]>;
 }
 
 @Component({
   selector: 'app-example-observables',
   standalone: true,
-  imports: [ ReactiveFormsModule,NgIf, NgFor, AsyncPipe ],
+  imports: [ReactiveFormsModule, NgIf, AsyncPipe, ListComponent],
   templateUrl: './example-observables.component.html',
   styleUrls: ['./example-observables.component.scss'],
 })
@@ -51,6 +52,6 @@ export class ExampleObservablesComponent implements TListComponent {
     distinctUntilChanged(),
   );
 
-  list$: Observable<TZelda[]> = of(ob)
+  defaultList$: Observable<TZelda[]> = of(ob);
 
 }

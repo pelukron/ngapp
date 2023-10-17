@@ -13,12 +13,8 @@
     </form>
   </div>
   <div class="col-12">
-    <nav>
-      <ng-container
-      *ngIf="list$ | async as list">
-        <a href="#" *ngFor="let item of list"
-        [id]="item.id">{{item.name}}</a>
-      </ng-container>
-    </nav>
+    <ng-container *ngIf="defaultList$ | async as list">
+      <app-list [defaultList]="list" />
+    </ng-container>
   </div>
 </div>

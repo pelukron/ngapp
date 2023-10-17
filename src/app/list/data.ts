@@ -1,6 +1,16 @@
 type blueprint = { appearances: string[], name: string, description: string, gender: string | null, race: string | null, id: string }
 
 export type TZelda = blueprint;
+
+type ListBaseBlueprint = {
+    id: string;
+    name: string
+}
+
+type ListShapeModel<TData> = Extract<TData, ListBaseBlueprint>;
+
+export type ListShape<TData> = Required<ListShapeModel<TData>>;
+
 export const ob: TZelda[] = [
     {
         appearances: [
