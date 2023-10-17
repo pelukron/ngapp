@@ -14,8 +14,10 @@ import {
   ReactiveFormsModule,
 } from '@angular/forms';
 import {
+  combineLatest,
   debounceTime,
   distinctUntilChanged,
+  map,
   Observable,
   of,
 } from 'rxjs';
@@ -47,11 +49,18 @@ export class ExampleObservablesComponent implements TListComponent {
     search: [''],
   });
 
-  searchValue$ = this.searchForm.controls.search.valueChanges.pipe(
-    debounceTime(200),
+  searchValue$: Observable<string> = this.searchForm.controls.search.valueChanges.pipe(
+    debounceTime(400),
     distinctUntilChanged(),
   );
 
   defaultList$: Observable<TZelda[]> = of(ob);
+
+  filterList$: Observable<TZelda[]> = combineLatest([this.defaultList$, this.searchValue$]).pipe(
+      map(([list, text])=> {
+        return list.filter( x => x.name.toLowerCase().includes(text.toLowerCase()))
+      })
+  )
+
 
 }

@@ -13,8 +13,17 @@
     </form>
   </div>
   <div class="col-12">
-    <ng-container *ngIf="defaultList$ | async as list">
-      <app-list [defaultList]="list" />
+    <ng-container *ngIf="filterList$ | async as list; else defaultList">
+      <app-list
+              [defaultList]="list"
+      />
     </ng-container>
+    <ng-template #defaultList>
+      <ng-container *ngIf="defaultList$ | async as list">
+        <app-list
+                [defaultList]="list"
+        />
+      </ng-container>
+    </ng-template>
   </div>
 </div>
