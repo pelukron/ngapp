@@ -28,9 +28,9 @@ import {
   TZelda,
 } from '../list/data';
 
-type TFormGroup = { search: FormControl<string> };
+export type TFormGroup = { search: FormControl<string> };
 
-type TListComponent = {
+export type TListComponent = {
   searchForm: FormGroup<TFormGroup>;
   searchValue$: Observable<string>;
 }
