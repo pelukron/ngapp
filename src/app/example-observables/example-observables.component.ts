@@ -40,7 +40,7 @@ type TListComponent = {
   standalone: true,
   imports: [ReactiveFormsModule, NgIf, AsyncPipe, ListComponent],
   templateUrl: './example-observables.component.html',
-  styleUrls: ['./example-observables.component.scss'],
+  styles: [],
 })
 export class ExampleObservablesComponent implements TListComponent {
   private _formBuilder: FormBuilder = inject(FormBuilder)
