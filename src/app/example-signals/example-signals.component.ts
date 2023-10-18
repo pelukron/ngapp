@@ -1,6 +1,8 @@
 import {
   Component,
   inject,
+  OnDestroy,
+  OnInit,
   Signal,
 } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -20,13 +22,20 @@ import {
   map,
   Observable,
   of,
+  Subject,
+  takeUntil,
+  tap,
 } from 'rxjs';
 import {
   ob,
   TZelda,
 } from '../list/data';
 import { ListComponent } from '../list/list.component';
-import { toSignal } from '@angular/core/rxjs-interop';
+import {
+  takeUntilDestroyed,
+  toSignal,
+} from '@angular/core/rxjs-interop';
+import { ListService } from '../list/list.service';
 
 @Component({
   selector: 'app-example-signals',
@@ -34,34 +43,34 @@ import { toSignal } from '@angular/core/rxjs-interop';
   imports: [CommonModule, ListComponent, ReactiveFormsModule],
   templateUrl: './example-signals.component.html',
 })
-export class ExampleSignalsComponent implements  TListComponent{
+export class ExampleSignalsComponent implements OnInit, OnDestroy {
   private _formBuilder: FormBuilder = inject(FormBuilder)
+  private _listService: ListService = inject(ListService);
 
   searchForm: FormGroup<TFormGroup> = this._formBuilder.nonNullable.group({
     search: [''],
   });
 
-  searchValue$: Observable<string> = this.searchForm.controls.search.valueChanges.pipe(
-      debounceTime(400),
-      distinctUntilChanged(),
-  );
-
-  defaultList$: Observable<TZelda[]> = of(ob);
-
-  filterList$: Observable<TZelda[]> = combineLatest(
-    [this.defaultList$, this.searchValue$]
-  ).pipe(
-      map(([list, text])=> {
-        return list.filter( x => x.name.toLowerCase().includes(text.toLowerCase()))
-      })
-  );
-
   defaultList: Signal<TZelda[]> = toSignal<TZelda[], TZelda[]>(
-      this.defaultList$, { initialValue: []}
+      this._listService.defaultList$, { initialValue: []}
   );
 
   filterList: Signal<TZelda[]> = toSignal<TZelda[], TZelda[]>(
-      this.filterList$, { initialValue: []}
+      this._listService.filterList$, { initialValue: []}
   );
+
+  ngOnInit() {
+    this.searchForm.controls.search.valueChanges.pipe(
+        debounceTime(400),
+        distinctUntilChanged(),
+        takeUntilDestroyed(),
+    ).subscribe(value =>
+        this._listService.searchText(value)
+    );
+  }
+
+  ngOnDestroy() {
+    this._listService.searchText('');
+  }
 
 }
