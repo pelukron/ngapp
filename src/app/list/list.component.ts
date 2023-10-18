@@ -2,7 +2,7 @@ import {
     Component,
     Input,
 } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { NgFor, NgIf } from '@angular/common';
 
 import {
     ListShape,
@@ -11,7 +11,7 @@ import {
 @Component({
     selector: 'app-list',
     standalone: true,
-    imports: [CommonModule],
+    imports: [NgIf, NgFor,],
     template: `
         <nav>
             <ng-container
