@@ -1,0 +1,25 @@
+<div class="container">
+    <div class="col-12">
+        <form [formGroup]="searchForm">
+            <fieldset>
+                <legend>Simple form</legend>
+                <div class="row">
+                    <div class="col-sm-12 col-md-6">
+                        <label for="search">Search:</label>
+                        <input formControlName="search" type="text" id="search" placeholder="Search..."/>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="col-12">
+        <ng-container *ngIf="filterList().length; else rawList">
+            <app-list
+                    [defaultList]="filterList()" />
+        </ng-container>
+        <ng-template #rawList>
+            <app-list
+                    [defaultList]="defaultList()"/>
+        </ng-template>
+    </div>
+</div>
