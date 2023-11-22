@@ -1,9 +1,8 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 import { ExampleObservablesComponent } from './example-observables/example-observables.component';
 import { ExampleSignalsComponent } from './example-signals/example-signals.component';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
@@ -18,9 +17,3 @@ const routes: Routes = [
     component: ExampleSignalsComponent
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
-})
-export class AppRoutingModule { }
