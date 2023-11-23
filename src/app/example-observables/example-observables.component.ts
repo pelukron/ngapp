@@ -2,11 +2,7 @@ import {
   Component,
   inject,
 } from '@angular/core';
-import {
-  AsyncPipe,
-  NgFor,
-  NgIf,
-} from '@angular/common';
+import { AsyncPipe } from '@angular/common';
 import {
   FormBuilder,
   FormControl,
@@ -38,7 +34,7 @@ export type TListComponent = {
 @Component({
   selector: 'app-example-observables',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf, AsyncPipe, ListComponent],
+  imports: [ReactiveFormsModule, AsyncPipe, ListComponent],
   templateUrl: './example-observables.component.html',
   styles: [],
 })
